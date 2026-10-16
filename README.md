@@ -30,6 +30,8 @@ Once pip has finished downloading the dependencies:
 ```bash
 (venv)$ cd project
 (venv)$ python manage.py makemigrations
+(venv)$ python manage.py help(this will show you commands look for the one under routes and run the 2)
+(venv)$ python manage.py The_2_comands_under_route_run_1_by_1
 (venv)$ python manage.py migrate
 (venv)$ python manage.py runserver
 ```
