@@ -1,0 +1,142 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Route Planner</title>
+   <meta
+    name="referrer"
+    content="strict-origin-when-cross-origin"
+>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/maplibre-gl@6.14.0/dist/maplibre-gl.css"
+>
+
+<link rel="stylesheet" href="{% static 'routes/route-map.css' %}">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+
+        </header>
+
+        <section class="panel">
+            <form id="route-form">
+                {% csrf_token %}
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="start">Starting location</label>
+                        <input
+                            id="start"
+                            name="start"
+                            type="text"
+                            value="Dallas, TX"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="finish">Destination</label>
+                        <input
+                            id="finish"
+                            name="finish"
+                            type="text"
+                            value="Atlanta, GA"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="max-range">Maximum range (miles)</label>
+                        <input
+                            id="max-range"
+                            name="max_range_miles"
+                            type="number"
+                            value="500"
+                            min="50"
+                            max="1000"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="mpg">Fuel economy (MPG)</label>
+                        <input
+                            id="mpg"
+                            name="mpg"
+                            type="number"
+                            value="10"
+                            min="1"
+                            max="100"
+                            step="0.1"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="max-detour">Maximum detour (miles)</label>
+                        <input
+                            id="max-detour"
+                            name="max_detour_miles"
+                            type="number"
+                            value="25"
+                            min="0"
+                            max="100"
+                            step="0.5"
+                            required
+                        >
+                    </div>
+
+                    <div class="field button-field">
+                        <button id="submit-button" type="submit">
+                            Calculate route
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <p id="route-status" role="status" aria-live="polite">
+                Enter your locations and calculate a route.
+            </p>
+        </section>
+
+        <section class="map-section">
+            <div class="map-heading">
+                <h2>Route map</h2>
+                <p>Click a marker to view its fuel price and details.</p>
+            </div>
+
+            <div id="map" aria-label="Interactive route map"></div>
+
+            <div class="legend">
+                <span><i class="dot origin"></i>Start</span>
+                <span><i class="dot destination"></i>Destination</span>
+                <span><i class="dot starting-fuel"></i>Starting fuel</span>
+                <span><i class="dot fuel-stop"></i>Recommended fuel stop</span>
+            </div>
+        </section>
+
+        <section id="summary" class="panel summary" hidden>
+            <h2>Journey summary</h2>
+            <div id="summary-grid" class="summary-grid"></div>
+
+            <h3>Fuel stations</h3>
+            <ul id="stop-list" class="stop-list"></ul>
+
+            <p class="notice">
+                Fuel costs are estimates using the supplied fuel-price data.
+                Station coordinates may represent approximate city locations
+                rather than exact station entrances.
+            </p>
+        </section>
+    </main>
+
+
+
+    <script type="module" src="{% static 'routes/route-map.js' %}?v=2"></script>
+</body>
+</html>
