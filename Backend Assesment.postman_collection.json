@@ -1,0 +1,43 @@
+{
+  "info": {
+    "_postman_id": "74d874ce-6aff-40bc-a682-7f6d1be34138",
+    "name": "Backend Assesment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18124293"
+  },
+  "item": [
+    {
+      "name": "routes",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Manhattan, NY\",\n  \"finish\": \"Atlanta, GA\",\n  \"max_range_miles\": 500,\n  \"mpg\": 10,\n  \"max_detour_miles\": 25\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/route/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "route",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
