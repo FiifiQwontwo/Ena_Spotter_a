@@ -10,7 +10,7 @@ python 3.9
 # Installation
 
 ```bash
-$ git clone [https://github.com/FiifiQwontwo/VehicleAPI.git]
+$ git clone []
 
 ```
 
