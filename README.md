@@ -10,7 +10,7 @@ python 3.9
 # Installation
 
 ```bash
-$ git clone []
+$ git clone [https://github.com/FiifiQwontwo/Ena_Spotter_a.git]
 
 ```
 
