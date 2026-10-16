@@ -14,10 +14,7 @@ $ git clone [https://github.com/FiifiQwontwo/Ena_Spotter_a.git]
 
 ```
 
-Then 
-```bash
-$ cd Foldername
-```
+
 create a virtual environment to install dependencies
 
 ```bash
