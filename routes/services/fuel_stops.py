@@ -35,14 +35,8 @@ def station_onto_route(longitude, latitude, coordinates, cumulative):
     miles_per_degree_y = 69.0
 
     for index, (route_lon, route_lat) in enumerate(coordinates):
-        x = (
-                    route_lon - longitude
-            ) * miles_per_degree_x
-
-        y = (
-                    route_lat - latitude
-            ) * miles_per_degree_y
-
+        x = (route_lon - longitude) * miles_per_degree_x
+        y = (route_lat - latitude) * miles_per_degree_y
         distance = math.hypot(x, y)
 
         if distance < best_distance:
@@ -169,8 +163,8 @@ def find_optimal_fuel_stops(route, mpg=10.0, max_range_miles=500, max_detour_mil
         })
 
     if not candidates:
-        raise FuelStopError("No fuel stations with coordinates were found within the configured route corridor. Check the station-coordinate import or increase "
-                            "the maximum detour.")
+        raise FuelStopError("No fuel stations with coordinates were found within the configured route corridor. Check "
+                            "the station-coordinate import or increase the maximum detour.")
     start_candidates = [candidate
         for candidate in candidates
         if (candidate["distance_from_start"] <= max_detour_miles
@@ -345,9 +339,7 @@ def find_optimal_fuel_stops(route, mpg=10.0, max_range_miles=500, max_detour_mil
         entry = previous[state]
 
         if entry is None:
-            raise FuelStopError(
-                "Could not reconstruct the refuelling plan."
-            )
+            raise FuelStopError("Could not reconstruct the refuelling plan.")
 
         prior_state, action = entry
 
@@ -379,11 +371,7 @@ def find_optimal_fuel_stops(route, mpg=10.0, max_range_miles=500, max_detour_mil
 
         gallons = units / mpg
 
-        stop = station_details(
-            nodes[index]["candidate"],
-            gallons,
-            mpg,
-        )
+        stop = station_details(nodes[index]["candidate"],gallons,mpg,)
 
         stop["role"] = "refuelling_stop"
         fuel_stops.append(stop)
@@ -398,54 +386,22 @@ def find_optimal_fuel_stops(route, mpg=10.0, max_range_miles=500, max_detour_mil
 
     approach_cost = money(
         Decimal(str(approach_gallons))
-        * starting_candidate["station"].retail_price
-    )
+        * starting_candidate["station"].retail_price)
 
-    stop_purchase_cost = money(
-        Decimal(str(costs[goal_state]))
-    )
+    stop_purchase_cost = money(Decimal(str(costs[goal_state])))
 
-    # Estimated total cost, including the approach fuel.
-    total_trip_cost = money(
-        stop_purchase_cost + approach_cost
-    )
+    total_trip_cost = money(stop_purchase_cost + approach_cost)
 
     return {
-        "starting_fuel_station": starting_fuel_station,
-        "fuel_stops": fuel_stops,
-
-        "estimated_driving_miles": round(
-            full_trip_miles, 2
-        ),
-
-        # Fuel purchased at recommended stations.
-        "estimated_gallons_purchased": round(
-            total_gallons, 2
-        ),
-
-        # Fuel consumed over the complete estimated journey.
-        "estimated_fuel_consumed_gallons": round(
-            full_trip_miles / mpg, 2
-        ),
-
-        "estimated_approach_miles": round(
-            approach_miles, 2
-        ),
-
-        "estimated_approach_fuel_cost_usd": float(
-            approach_cost
-        ),
-
-        "estimated_stop_purchase_cost_usd": float(
-            stop_purchase_cost
-        ),
-
-        "estimated_total_fuel_cost_usd": float(
-            total_trip_cost
-        ),
-
+        "starting_fuel_station": starting_fuel_station,"fuel_stops": fuel_stops,"estimated_driving_miles":
+            round(full_trip_miles, 2),
+        "estimated_gallons_purchased": round(total_gallons, 2),
+        "estimated_fuel_consumed_gallons": round(full_trip_miles / mpg, 2),
+        "estimated_approach_miles": round(approach_miles, 2),
+        "estimated_approach_fuel_cost_usd": float(approach_cost),
+        "estimated_stop_purchase_cost_usd": float(stop_purchase_cost ),
+        "estimated_total_fuel_cost_usd": float(total_trip_cost),
         "candidate_stations_considered": len(intermediate),
-
         "location_accuracy": "approximate_city_coordinates",
     }
 
